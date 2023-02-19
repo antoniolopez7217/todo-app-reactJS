@@ -10,8 +10,9 @@ const FillTheBox = (props) => (
   </form>
 )
 
-const ToDoItem = ({note}) => (<>
-<b>{note.item}</b>
+const ToDoItem = ({note, deleteItem}) => (<>
+<b>{note.item}    </b>
+<button onClick={deleteItem}>Delete</button>
 <p>Created on {note.date}</p>
 </>)
 
@@ -46,17 +47,29 @@ const App = () => {
       setValue('')
   }
 
+  const deleteItem = (id) => {
+    thingService
+      .remove(id)
+      .then(() => {
+        setThings(things.filter(x => x.id !== id))
+      })
+  }
+
   const handleValueChange = (event) => {setValue(event.target.value)}
 
   return (
     <div>
       <Header />
-      <FillTheBox addItem={addItem} 
-      value={value} 
-      onChange={handleValueChange}/>
+      <FillTheBox 
+        addItem={addItem} 
+        value={value} 
+        onChange={handleValueChange}/>
       <br />
         {things.map(x => 
-        <ToDoItem key={x.id} note={x}/>)}
+        <ToDoItem 
+          key={x.id} 
+          note={x} 
+          deleteItem={() => deleteItem(x.id)}/>)}
     </div>
   )
 }
