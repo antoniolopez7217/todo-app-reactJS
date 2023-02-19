@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react"
 import thingService from './services/things'
 
-const Header = () => <h1>THINGS TO DO</h1>
-const ToDoItem = (props) => <p>{props.note}</p>
+const Header = () => <h1>THINGS TO DO </h1>
+
 const FillTheBox = (props) => (
-  <form>
+  <form onSubmit={props.addItem}>
     <input value={props.value} onChange={props.onChange}/>
+    <button type="submit">Add new</button>
   </form>
 )
+
+const ToDoItem = ({note}) => (<>
+<b>{note.item}</b>
+<p>Created on {note.date}</p>
+</>)
 
 const App = () => {
   const [things, setThings] = useState([])
@@ -22,19 +28,35 @@ const App = () => {
       })
   },[])
 
-  //const addPerson = (event)
+  //event.preventDefault() -> To prevent the browser reload/refresh
+  const addItem = (event) => {
+    event.preventDefault()
+    const newItem = {
+      item: value,
+      completed: false,
+      date: Date()
+    }
 
+    thingService
+      .create(newItem)
+      .then(res => {
+        setThings(things.concat(res))
+        console.log(`${newItem.item} added`)
+      })
+      setValue('')
+  }
 
   const handleValueChange = (event) => {setValue(event.target.value)}
 
   return (
     <div>
       <Header />
-      <FillTheBox value={value} onChange={handleValueChange}/>
-      <ul>
+      <FillTheBox addItem={addItem} 
+      value={value} 
+      onChange={handleValueChange}/>
+      <br />
         {things.map(x => 
-        <li><ToDoItem note={x.item}/></li>)}
-      </ul>
+        <ToDoItem key={x.id} note={x}/>)}
     </div>
   )
 }

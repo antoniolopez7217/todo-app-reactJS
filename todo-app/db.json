@@ -1,25 +1,25 @@
 {
   "things": [
     {
-      "item": "Arto Hellas",
+      "item": "Learn React",
       "completed": true,
       "date": "02/01/2023",
       "id": 1
     },
     {
-      "item": "Ada Lovelace",
+      "item": "Learn JS",
       "completed": true,
       "date": "02/01/2023",
       "id": 2
     },
     {
-      "item": "Dan Abramov",
+      "item": "Learn Python",
       "completed": true,
       "date": "02/01/2023",
       "id": 3
     },
     {
-      "item": "Mary Poppendieck",
+      "item": "Learn AWS",
       "completed": true,
       "date": "02/01/2023",
       "id": 4
