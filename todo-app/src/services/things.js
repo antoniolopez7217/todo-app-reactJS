@@ -13,10 +13,16 @@ const create = newItem => {
 }
 
 const remove = id => {
-	const request = remove.delete(`${baseUrl}/${id}`)
+	const request = axios.delete(`${baseUrl}/${id}`)
 	return request.then(response => response.data)
 }
 
-const thingService = {getAll, create, remove}
+const update = ({id, newItem}) => {
+	const request = axios.put(`${baseUrl}/${id}`, newItem)
+	return request.then(response => response.data)
+}
+
+
+const thingService = {getAll, create, remove, update}
 
 export default thingService

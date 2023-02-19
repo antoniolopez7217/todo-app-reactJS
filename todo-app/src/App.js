@@ -10,8 +10,13 @@ const FillTheBox = (props) => (
   </form>
 )
 
-const ToDoItem = ({note, deleteItem}) => (<>
+const ToDoItem = ({note, deleteItem}) => (
+<>
+ {/* This button will update the completed key */}
+<button> Done? </button> 
 <b>{note.item}    </b>
+ {/* This button will edit the item */}
+<button> Edit </button>
 <button onClick={deleteItem}>Delete</button>
 <p>Created on {note.date}</p>
 </>)
@@ -29,8 +34,9 @@ const App = () => {
       })
   },[])
 
-  //event.preventDefault() -> To prevent the browser reload/refresh
+  //Add info to the json server
   const addItem = (event) => {
+    //event.preventDefault() -> To prevent the browser reload/refresh
     event.preventDefault()
     const newItem = {
       item: value,
@@ -47,11 +53,21 @@ const App = () => {
       setValue('')
   }
 
-  const deleteItem = (id) => {
+  //Delete info from the json server
+  const deleteItem = (thing) => {
     thingService
-      .remove(id)
+      .remove(thing.id)
       .then(() => {
-        setThings(things.filter(x => x.id !== id))
+        setThings(things.filter(x => x.id !== thing.id))
+        console.log(`${thing.item} deleted`)
+      })
+  }
+
+  const updateItem = ({id, newItem}) => {
+        thingService
+      .update({id, newItem})
+      .then(() => {
+        setThings(things.map(x => x.id === id ?  ))
       })
   }
 
@@ -67,9 +83,9 @@ const App = () => {
       <br />
         {things.map(x => 
         <ToDoItem 
-          key={x.id} 
+          key={x.id}
           note={x} 
-          deleteItem={() => deleteItem(x.id)}/>)}
+          deleteItem={() => deleteItem(x)}/>)}
     </div>
   )
 }
