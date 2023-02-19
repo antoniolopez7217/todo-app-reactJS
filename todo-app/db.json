@@ -1,0 +1,28 @@
+{
+  "things": [
+    {
+      "item": "Arto Hellas",
+      "completed": true,
+      "date": "02/01/2023",
+      "id": 1
+    },
+    {
+      "item": "Ada Lovelace",
+      "completed": true,
+      "date": "02/01/2023",
+      "id": 2
+    },
+    {
+      "item": "Dan Abramov",
+      "completed": true,
+      "date": "02/01/2023",
+      "id": 3
+    },
+    {
+      "item": "Mary Poppendieck",
+      "completed": true,
+      "date": "02/01/2023",
+      "id": 4
+    }
+  ]
+}
