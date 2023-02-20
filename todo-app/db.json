@@ -2,7 +2,7 @@
   "things": [
     {
       "item": "Learn React",
-      "completed": true,
+      "completed": false,
       "date": "02/01/2023",
       "id": 1
     },
@@ -17,12 +17,6 @@
       "completed": true,
       "date": "02/01/2023",
       "id": 3
-    },
-    {
-      "item": "Learn C",
-      "completed": true,
-      "date": "Sun Feb 19 2023 22:29:54 GMT+0100 (Central European Standard Time)",
-      "id": 4
     }
   ]
 }

@@ -1,7 +1,25 @@
 import { useEffect, useState } from "react"
 import thingService from './services/things'
+import "./App.css";
 
 const Header = () => <h1>THINGS TO DO </h1>
+
+const CheckBox = ({item, updateItem}) => {
+const [isChecked, setIsChecked] = useState(item.completed);
+const handleCheckChange = () => {
+  setIsChecked((prev) => !prev)
+}
+
+return (
+  <label>
+    <input 
+      type="checkbox" 
+      checked={isChecked} 
+      onClick={updateItem}
+      onChange={handleCheckChange}/>
+  </label>
+  )}
+
 
 const FillTheBox = (props) => (
   <form onSubmit={props.addItem}>
@@ -10,21 +28,20 @@ const FillTheBox = (props) => (
   </form>
 )
 
-const ToDoItem = ({note, deleteItem, updateItem}) => (
+const ToDoItem = ({item, deleteItem, updateItem}) => (
 <>
- {/* This button will update the completed key */}
-<button onClick={updateItem}> Done? </button> 
-<b>{note.item}    </b>
+<CheckBox item={item} updateItem={updateItem}/>
+<b>{item.item}    </b>
  {/* This button will edit the item */}
 <button> Edit </button>
 <button onClick={deleteItem}>Delete</button>
-<p>Created on {note.date}</p>
+<p>Created on {item.date}</p>
 </>)
 
 const App = () => {
   const [things, setThings] = useState([])
   const [value, setValue] = useState('')
-
+  
   //Get the info from the json server
   useEffect (() => {
     thingService
@@ -84,10 +101,10 @@ const App = () => {
         onChange={handleValueChange}/>
       <br />
         {things.map(x => 
-        <ToDoItem 
+        <ToDoItem
           key={x.id}
           updateItem={() => updateItem(x)}
-          note={x} 
+          item={x} 
           deleteItem={() => deleteItem(x)}/>)}
     </div>
   )
