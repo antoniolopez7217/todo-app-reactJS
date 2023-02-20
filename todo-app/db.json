@@ -2,13 +2,13 @@
   "things": [
     {
       "item": "Learn React",
-      "completed": false,
+      "completed": true,
       "date": "02/01/2023",
       "id": 1
     },
     {
       "item": "Learn JS",
-      "completed": true,
+      "completed": false,
       "date": "02/01/2023",
       "id": 2
     },

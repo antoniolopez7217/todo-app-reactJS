@@ -4,37 +4,37 @@ import "./App.css";
 
 const Header = () => <h1>THINGS TO DO </h1>
 
-const CheckBox = ({item, updateItem}) => {
-const [isChecked, setIsChecked] = useState(item.completed);
-const handleCheckChange = () => {
-  setIsChecked((prev) => !prev)
-}
+const CheckBox = ({item, updateCompleted}) => {
+  const [isChecked, setIsChecked] = useState(item.completed);
+  const handleCheckChange = () => {
+      setIsChecked((prev) => !prev)
+    }
 
-return (
-  <label>
-    <input 
-      type="checkbox" 
-      checked={isChecked} 
-      onClick={updateItem}
-      onChange={handleCheckChange}/>
-  </label>
+  return (
+    <label>
+      <input 
+        type="checkbox" 
+        checked={isChecked} 
+        onClick={updateCompleted}
+        onChange={handleCheckChange}/>
+    </label>
   )}
 
 
 const FillTheBox = (props) => (
-  <form onSubmit={props.addItem}>
+  <form onSubmit={props.addThing}>
     <input value={props.value} onChange={props.onChange}/>
     <button type="submit">Add new</button>
   </form>
 )
 
-const ToDoItem = ({item, deleteItem, updateItem}) => (
+const ToDoItem = ({item, deleteThing, updateCompleted}) => (
 <>
-<CheckBox item={item} updateItem={updateItem}/>
+<CheckBox item={item} updateCompleted={updateCompleted}/>
 <b>{item.item}    </b>
  {/* This button will edit the item */}
 <button> Edit </button>
-<button onClick={deleteItem}>Delete</button>
+<button onClick={deleteThing}>Delete</button>
 <p>Created on {item.date}</p>
 </>)
 
@@ -52,26 +52,31 @@ const App = () => {
   },[])
 
   //Add info to the json server
-  const addItem = (event) => {
-    //event.preventDefault() -> To prevent the browser reload/refresh
+  const addThing = (event) => {
+    if(!value){
+      setTimeout(window.alert("You are trying to create an empty item")
+      , 2000)
+      return
+      }
+      //event.preventDefault() -> To prevent the browser reload/refresh
     event.preventDefault()
-    const newItem = {
+    let newThing = {
       item: value,
       completed: false,
       date: Date()
     }
 
     thingService
-      .create(newItem)
+      .create(newThing)
       .then(res => {
         setThings(things.concat(res))
-        console.log(`${newItem.item} added`)
+        console.log(`${newThing.item} added`)
       })
       setValue('')
   }
 
   //Delete info from the json server
-  const deleteItem = (thing) => {
+  const deleteThing = (thing) => {
     thingService
       .remove(thing.id)
       .then(() => {
@@ -80,13 +85,24 @@ const App = () => {
       })
   }
 
-  const updateItem = (thing) => {
-    const newItem = {...thing, completed:!thing.completed}
-    let id = thing.id
+  const updateCompleted = (thing) => {
+    let changedThing = {...thing, completed:!thing.completed}
+    updateThing(changedThing)
+  }
+  
+  // const updateItem = (thing) => {
+  //   let changedThing = {...thing, completed:!thing.completed}
+  //   let id = thing.id
+  //   updateThing(changedThing)
+
+
+  const updateThing = (changedThing) => {
+    let id = changedThing.id
+
     thingService
-      .update({id, newItem})
+      .update({id, changedThing})
       .then(() => {
-        setThings(things.map(x => x.id === id ? newItem : x))
+        setThings(things.map(x => x.id === id ? changedThing : x))
       })
   }
 
@@ -96,16 +112,16 @@ const App = () => {
     <div>
       <Header />
       <FillTheBox 
-        addItem={addItem} 
+        addThing={addThing} 
         value={value} 
         onChange={handleValueChange}/>
       <br />
         {things.map(x => 
         <ToDoItem
           key={x.id}
-          updateItem={() => updateItem(x)}
+          updateCompleted={() => updateCompleted(x)}
           item={x} 
-          deleteItem={() => deleteItem(x)}/>)}
+          deleteThing={() => deleteThing(x)}/>)}
     </div>
   )
 }

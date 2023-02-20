@@ -7,8 +7,8 @@ const getAll = () => {
 	return request.then(response => response.data)
 }
 
-const create = newItem => {	
-	const request = axios.post(baseUrl, newItem)
+const create = newThing => {	
+	const request = axios.post(baseUrl, newThing)
 	return request.then(response => response.data)
 }
 
@@ -17,8 +17,8 @@ const remove = id => {
 	return request.then(response => response.data)
 }
 
-const update = ({id, newItem}) => {
-	const request = axios.put(`${baseUrl}/${id}`, newItem)
+const update = ({id, changedThing}) => {
+	const request = axios.put(`${baseUrl}/${id}`, changedThing)
 	return request.then(response => response.data)
 }
 
