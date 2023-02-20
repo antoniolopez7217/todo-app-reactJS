@@ -4,8 +4,15 @@ import "./App.css";
 
 const Header = () => <h1>THINGS TO DO </h1>
 
+const FillTheBox = (props) => (
+  <form onSubmit={props.addThing}>
+    <input value={props.value} onChange={props.onChange}/>
+    <button type="submit">Add new</button>
+  </form>
+)
+
 const CheckBox = ({item, updateCompleted}) => {
-  const [isChecked, setIsChecked] = useState(item.completed);
+  const [isChecked, setIsChecked] = useState(item.completed)
   const handleCheckChange = () => {
       setIsChecked((prev) => !prev)
     }
@@ -18,25 +25,29 @@ const CheckBox = ({item, updateCompleted}) => {
         onClick={updateCompleted}
         onChange={handleCheckChange}/>
     </label>
-  )}
+)}
 
+const EditButton = (props) => {
+  const [editValue, setEditValue] = useState('')
+  const handleEditValueChange = (event) => {
+    setEditValue(event.target.editValue)}
 
-const FillTheBox = (props) => (
-  <form onSubmit={props.addThing}>
-    <input value={props.value} onChange={props.onChange}/>
-    <button type="submit">Add new</button>
+  return (
+  <form onSubmit={props.updateItem}>
+    <input value={editValue} onChange={handleEditValueChange}/>
+    <button type="submit">Edit</button>
   </form>
-)
+)}
 
-const ToDoItem = ({item, deleteThing, updateCompleted}) => (
-<>
-<CheckBox item={item} updateCompleted={updateCompleted}/>
-<b>{item.item}    </b>
- {/* This button will edit the item */}
-<button> Edit </button>
-<button onClick={deleteThing}>Delete</button>
-<p>Created on {item.date}</p>
-</>)
+const ToDoItem = ({item, deleteThing, updateCompleted, updateItem}) => (
+  <div>
+    <CheckBox item={item} updateCompleted={updateCompleted}/>
+    <b>{item.item}    </b>
+    <button onClick={deleteThing}>Delete</button>
+    <EditButton />
+    <br />
+  </div>
+)
 
 const App = () => {
   const [things, setThings] = useState([])
@@ -90,11 +101,11 @@ const App = () => {
     updateThing(changedThing)
   }
   
-  // const updateItem = (thing) => {
-  //   let changedThing = {...thing, completed:!thing.completed}
-  //   let id = thing.id
-  //   updateThing(changedThing)
-
+  const updateItem = ({thing, updateItem}) => {
+    let changedThing = {...thing, item:updateItem}
+    updateThing(changedThing)
+  }
+  
 
   const updateThing = (changedThing) => {
     let id = changedThing.id

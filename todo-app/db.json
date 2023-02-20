@@ -8,7 +8,7 @@
     },
     {
       "item": "Learn JS",
-      "completed": false,
+      "completed": true,
       "date": "02/01/2023",
       "id": 2
     },
