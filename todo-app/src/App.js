@@ -10,10 +10,10 @@ const FillTheBox = (props) => (
   </form>
 )
 
-const ToDoItem = ({note, deleteItem}) => (
+const ToDoItem = ({note, deleteItem, updateItem}) => (
 <>
  {/* This button will update the completed key */}
-<button> Done? </button> 
+<button onClick={updateItem}> Done? </button> 
 <b>{note.item}    </b>
  {/* This button will edit the item */}
 <button> Edit </button>
@@ -63,11 +63,13 @@ const App = () => {
       })
   }
 
-  const updateItem = ({id, newItem}) => {
-        thingService
+  const updateItem = (thing) => {
+    const newItem = {...thing, completed:!thing.completed}
+    let id = thing.id
+    thingService
       .update({id, newItem})
       .then(() => {
-        setThings(things.map(x => x.id === id ?  ))
+        setThings(things.map(x => x.id === id ? newItem : x))
       })
   }
 
@@ -84,6 +86,7 @@ const App = () => {
         {things.map(x => 
         <ToDoItem 
           key={x.id}
+          updateItem={() => updateItem(x)}
           note={x} 
           deleteItem={() => deleteItem(x)}/>)}
     </div>
