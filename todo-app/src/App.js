@@ -27,24 +27,39 @@ const CheckBox = ({item, updateCompleted}) => {
     </label>
 )}
 
-// const EditButton = (props) => {
-//   const [editValue, setEditValue] = useState('')
-//   const handleEditValueChange = (event) => {
-//     setEditValue(event.target.editValue)}
+const EditButton = ({thing, things, setThings}) => {
+  const [editValue, setEditValue] = useState('')
 
-//   return (
-//   <form onSubmit={props.updateItem}>
-//     <input value={editValue} onChange={handleEditValueChange}/>
-//     <button type="submit">Edit</button>
-//   </form>
-// )}
+  
+    const updateItem = (event) => {
+      event.preventDefault()
+      const changedThing = {...thing, item:editValue}
+      let id = changedThing.id
+      console.log(changedThing)
+      thingService
+        .update({id, changedThing})
+        .then(() => {
+          setThings(things.map(x => x.id === id ? changedThing : x))
+        })
+      setEditValue('')
+    }
+  
+    const handleEditValueChange = (event) => {
+      setEditValue(event.target.editValue)}
+  
+  return (
+  <form onSubmit={updateItem}>
+    <input value={editValue} onChange={handleEditValueChange}/>
+    <button type="submit">Edit</button>
+  </form>
+)}
 
-const ToDoItem = ({item, deleteThing, updateCompleted, updateItem}) => (
+const ToDoItem = ({item, deleteThing, updateCompleted, things, setThings}) => (
   <div>
     <CheckBox item={item} updateCompleted={updateCompleted}/>
     <span style={{textDecorationLine: item.completed? 'line-through' : ''}}>{item.item}    </span>
     <button onClick={deleteThing}>Delete</button>
-    {/* <EditButton /> */}
+    <EditButton thing={item} things={things} setThings={setThings}/>
     <br />
   </div>
 )
@@ -100,12 +115,7 @@ const App = () => {
     let changedThing = {...thing, completed:!thing.completed}
     updateThing(changedThing)
   }
-  
-  // const updateItem = ({thing, updateItem}) => {
-  //   let changedThing = {...thing, item:updateItem}
-  //   updateThing(changedThing)
-  // }
-  
+ 
 
   const updateThing = (changedThing) => {
     let id = changedThing.id
@@ -129,6 +139,7 @@ const App = () => {
       <br />
         {things.map(x => 
         <ToDoItem
+          things={things}
           key={x.id}
           updateCompleted={() => updateCompleted(x)}
           item={x} 
