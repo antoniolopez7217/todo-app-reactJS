@@ -27,24 +27,24 @@ const CheckBox = ({item, updateCompleted}) => {
     </label>
 )}
 
-const EditButton = (props) => {
-  const [editValue, setEditValue] = useState('')
-  const handleEditValueChange = (event) => {
-    setEditValue(event.target.editValue)}
+// const EditButton = (props) => {
+//   const [editValue, setEditValue] = useState('')
+//   const handleEditValueChange = (event) => {
+//     setEditValue(event.target.editValue)}
 
-  return (
-  <form onSubmit={props.updateItem}>
-    <input value={editValue} onChange={handleEditValueChange}/>
-    <button type="submit">Edit</button>
-  </form>
-)}
+//   return (
+//   <form onSubmit={props.updateItem}>
+//     <input value={editValue} onChange={handleEditValueChange}/>
+//     <button type="submit">Edit</button>
+//   </form>
+// )}
 
 const ToDoItem = ({item, deleteThing, updateCompleted, updateItem}) => (
   <div>
     <CheckBox item={item} updateCompleted={updateCompleted}/>
-    <b>{item.item}    </b>
+    <span style={{textDecorationLine: item.completed? 'line-through' : ''}}>{item.item}    </span>
     <button onClick={deleteThing}>Delete</button>
-    <EditButton />
+    {/* <EditButton /> */}
     <br />
   </div>
 )
@@ -101,10 +101,10 @@ const App = () => {
     updateThing(changedThing)
   }
   
-  const updateItem = ({thing, updateItem}) => {
-    let changedThing = {...thing, item:updateItem}
-    updateThing(changedThing)
-  }
+  // const updateItem = ({thing, updateItem}) => {
+  //   let changedThing = {...thing, item:updateItem}
+  //   updateThing(changedThing)
+  // }
   
 
   const updateThing = (changedThing) => {

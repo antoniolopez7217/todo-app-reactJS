@@ -2,19 +2,19 @@
   "things": [
     {
       "item": "Learn React",
-      "completed": true,
+      "completed": false,
       "date": "02/01/2023",
       "id": 1
     },
     {
       "item": "Learn JS",
-      "completed": true,
+      "completed": false,
       "date": "02/01/2023",
       "id": 2
     },
     {
       "item": "Learn Python",
-      "completed": true,
+      "completed": false,
       "date": "02/01/2023",
       "id": 3
     }
