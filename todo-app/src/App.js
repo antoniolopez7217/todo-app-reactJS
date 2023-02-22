@@ -27,39 +27,16 @@ const CheckBox = ({item, updateCompleted}) => {
     </label>
 )}
 
-const EditButton = ({thing, things, setThings}) => {
-  const [editValue, setEditValue] = useState('')
+const DeleteButton = (props) => (<button onClick={props.deleteThing}>Delete</button>)
 
-  
-    const updateItem = (event) => {
-      event.preventDefault()
-      const changedThing = {...thing, item:editValue}
-      let id = changedThing.id
-      console.log(changedThing)
-      thingService
-        .update({id, changedThing})
-        .then(() => {
-          setThings(things.map(x => x.id === id ? changedThing : x))
-        })
-      setEditValue('')
-    }
-  
-    const handleEditValueChange = (event) => {
-      setEditValue(event.target.editValue)}
-  
-  return (
-  <form onSubmit={updateItem}>
-    <input value={editValue} onChange={handleEditValueChange}/>
-    <button type="submit">Edit</button>
-  </form>
-)}
-
-const ToDoItem = ({item, deleteThing, updateCompleted, things, setThings}) => (
+const ToDoItem = ({item, deleteThing, updateCompleted}) => (
   <div>
     <CheckBox item={item} updateCompleted={updateCompleted}/>
-    <span style={{textDecorationLine: item.completed? 'line-through' : ''}}>{item.item}    </span>
-    <button onClick={deleteThing}>Delete</button>
-    <EditButton thing={item} things={things} setThings={setThings}/>
+    <span style={{textDecorationLine: item.completed? 'line-through' : ''}}>
+      {item.item}
+    </span>
+    <span>  </span>
+    <DeleteButton deleteThing={deleteThing} />
     <br />
   </div>
 )
@@ -124,6 +101,7 @@ const App = () => {
       .update({id, changedThing})
       .then(() => {
         setThings(things.map(x => x.id === id ? changedThing : x))
+        console.log(`${changedThing.item} updated`)
       })
   }
 
@@ -139,7 +117,6 @@ const App = () => {
       <br />
         {things.map(x => 
         <ToDoItem
-          things={things}
           key={x.id}
           updateCompleted={() => updateCompleted(x)}
           item={x} 
