@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react"
 import thingService from './services/things'
-import "./App.css";
 
 const Header = () => <h1>THINGS TO DO </h1>
 
-const FillTheBox = (props) => (
+const NewThing = (props) => (
   <form onSubmit={props.addThing}>
     <input value={props.value} onChange={props.onChange}/>
     <button type="submit">Add new</button>
   </form>
 )
 
-const CheckBox = ({item, updateCompleted}) => {
+const FilterButtons = ({setFilter}) => (
+  <div>
+    <button onClick={() => {setFilter("todo")}}> show to do</button>
+    <button onClick={() => {setFilter("completed")}}> show completed</button>
+    <button onClick={() => {setFilter("all")}}> show all</button>
+  </div>
+)
+
+const CheckBoxCompleted = ({item, updateCompleted}) => {
   const [isChecked, setIsChecked] = useState(item.completed)
   const handleCheckChange = () => {
       setIsChecked((prev) => !prev)
@@ -31,7 +38,7 @@ const DeleteButton = (props) => (<button onClick={props.deleteThing}>Delete</but
 
 const ToDoItem = ({item, deleteThing, updateCompleted}) => (
   <div>
-    <CheckBox item={item} updateCompleted={updateCompleted}/>
+    <CheckBoxCompleted item={item} updateCompleted={updateCompleted}/>
     <span style={{textDecorationLine: item.completed? 'line-through' : ''}}>
       {item.item}
     </span>
@@ -44,7 +51,8 @@ const ToDoItem = ({item, deleteThing, updateCompleted}) => (
 const App = () => {
   const [things, setThings] = useState([])
   const [value, setValue] = useState('')
-  
+  const [filter, setFilter] = useState("all")
+
   //Get the info from the json server
   useEffect (() => {
     thingService
@@ -90,11 +98,6 @@ const App = () => {
 
   const updateCompleted = (thing) => {
     let changedThing = {...thing, completed:!thing.completed}
-    updateThing(changedThing)
-  }
- 
-
-  const updateThing = (changedThing) => {
     let id = changedThing.id
 
     thingService
@@ -105,17 +108,21 @@ const App = () => {
       })
   }
 
+  const filterThings = filter==="completed" ? things.filter(thing => thing.completed===true) :
+  filter === "all" ? things : things.filter(thing => thing.completed===false)
+
   const handleValueChange = (event) => {setValue(event.target.value)}
 
   return (
     <div>
       <Header />
-      <FillTheBox 
+      <NewThing 
         addThing={addThing} 
         value={value} 
         onChange={handleValueChange}/>
+      <FilterButtons setFilter={setFilter}/>
       <br />
-        {things.map(x => 
+        {filterThings.map(x => 
         <ToDoItem
           key={x.id}
           updateCompleted={() => updateCompleted(x)}
