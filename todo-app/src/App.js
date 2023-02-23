@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react"
 import thingService from './services/things'
+import './App.css'
 
 const Header = () => <h1>THINGS TO DO </h1>
 
 const NewThing = (props) => (
   <form onSubmit={props.addThing}>
     <input value={props.value} onChange={props.onChange}/>
-    <button type="submit">Add new</button>
+    <button type="submit">Add</button>
   </form>
 )
 
 const FilterButtons = ({setFilter}) => (
-  <div>
-    <button onClick={() => {setFilter("todo")}}> show to do</button>
-    <button onClick={() => {setFilter("completed")}}> show completed</button>
-    <button onClick={() => {setFilter("all")}}> show all</button>
+  <div >
+    <button onClick={() => {setFilter("all")}}> All</button>
+    <button onClick={() => {setFilter("Active")}}> Active</button>
+    <button onClick={() => {setFilter("completed")}}> Completed</button>
   </div>
 )
 
@@ -30,7 +31,10 @@ const CheckBoxCompleted = ({item, updateCompleted}) => {
         type="checkbox" 
         checked={isChecked} 
         onClick={updateCompleted}
-        onChange={handleCheckChange}/>
+        onChange={handleCheckChange}/>    
+        <span style={{textDecorationLine: item.completed? 'line-through' : ''}}>
+        {item.item}
+      </span>
     </label>
 )}
 
@@ -39,10 +43,6 @@ const DeleteButton = (props) => (<button onClick={props.deleteThing}>Delete</but
 const ToDoItem = ({item, deleteThing, updateCompleted}) => (
   <div>
     <CheckBoxCompleted item={item} updateCompleted={updateCompleted}/>
-    <span style={{textDecorationLine: item.completed? 'line-through' : ''}}>
-      {item.item}
-    </span>
-    <span>  </span>
     <DeleteButton deleteThing={deleteThing} />
     <br />
   </div>
@@ -128,7 +128,7 @@ const App = () => {
           updateCompleted={() => updateCompleted(x)}
           item={x} 
           deleteThing={() => deleteThing(x)}/>)}
-    </div>
+      </div>
   )
 }
 
