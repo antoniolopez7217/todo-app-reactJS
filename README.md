@@ -3,7 +3,9 @@
 A simple app created with [**React**](https://reactjs.org/) that keeps track of your to-do actions, you can add any number of tasks to it, click on the checkbox to complete the task, and filter using buttons to know the current status of the tasks.
 
 All the notes will be stored on a local server, using [*json server*](https://github.com/typicode/json-server) and the library [*axios*](https://github.com/axios/axios).
-
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/117537010/222531755-85286aeb-9eb0-4600-a6f7-11b0d0a96d2d.png"/>
+</div>
 
 
 ## :hammer_and_wrench: How to use it?
@@ -27,6 +29,6 @@ The app will be open automatically in the [port 3000](http://localhost:3000/) of
 Now, you are ready to use the app and modify it as you wish.
 
 
-
+---
 
 [![Linkedin Badge](https://img.shields.io/badge/-Linkedin-blue?style=flat&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/antoniolopezchamorro)
