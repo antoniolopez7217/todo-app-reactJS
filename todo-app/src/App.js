@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import thingService from './services/things'
 import './App.css'
+import {DeleteButton} from './components/buttons.js'
 
 const Header = () => <h1>THINGS TO DO </h1>
 
@@ -37,8 +38,6 @@ const CheckBoxCompleted = ({item, updateCompleted}) => {
       </span>
     </label>
 )}
-
-const DeleteButton = (props) => (<button onClick={props.deleteThing}>Delete</button>)
 
 const ToDoItem = ({item, deleteThing, updateCompleted}) => (
   <div>
@@ -96,6 +95,7 @@ const App = () => {
       })
   }
 
+  //Update complete status
   const updateCompleted = (thing) => {
     let changedThing = {...thing, completed:!thing.completed}
     let id = changedThing.id
