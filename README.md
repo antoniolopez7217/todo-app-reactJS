@@ -1,8 +1,10 @@
 # To-Do app with ReactJs
 
-A simple app that keeps track of your to-do actions, you can add any number of tasks to it, click on the checkbox to complete the task, and filter using buttons to know the current status of the tasks.
+A simple app created with [**React**](https://reactjs.org/) that keeps track of your to-do actions, you can add any number of tasks to it, click on the checkbox to complete the task, and filter using buttons to know the current status of the tasks.
 
 All the notes will be stored on a local server, using [*json server*](https://github.com/typicode/json-server) and the library [*axios*](https://github.com/axios/axios).
+
+
 
 ## :hammer_and_wrench: How to use it?
 
