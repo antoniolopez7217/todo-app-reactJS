@@ -1,21 +1,21 @@
 {
   "things": [
     {
-      "item": "Learn React",
+      "item": "First note",
       "completed": false,
-      "date": "02/01/2023",
+      "date": "Thu Mar 02 2023 20:00:42 GMT+0100 (Central European Standard Time)",
       "id": 1
     },
     {
-      "item": "Learn JS",
-      "completed": false,
-      "date": "02/01/2023",
+      "item": "Second note",
+      "completed": true,
+      "date": "Thu Mar 02 2023 20:00:44 GMT+0100 (Central European Standard Time)",
       "id": 2
     },
     {
-      "item": "Learn Python",
+      "item": "Third note",
       "completed": false,
-      "date": "02/01/2023",
+      "date": "Thu Mar 02 2023 20:00:47 GMT+0100 (Central European Standard Time)",
       "id": 3
     }
   ]
